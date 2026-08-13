@@ -4,14 +4,14 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
 
 ## TODOS (For MVP):
   - [ ] Components
-    - [ ] Health
-      - [ ] Store max hp & current hp
-      - [ ] Signals
-        - [ ] On damaged
-        - [ ] On dead
-        - [ ] On heal
-        - [ ] On fullheal
-      - [ ] Healthbars
+    - [x] Health
+      - [x] Store max hp & current hp
+      - [x] Signals
+        - [x] On damaged
+        - [x] On dead
+        - [x] On heal
+        - [x] On fullheal
+      - [x] Healthbars
     - [ ] Stats
       - [ ] Hold various player & enemy stats
         - [ ] Speed
