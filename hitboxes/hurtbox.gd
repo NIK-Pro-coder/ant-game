@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
     if i.iframe_group in iframes: continue
     
     on_hit.emit(i)
-    i.on_hit.emit(self)
+    i.hit(self)
     
     iframes[i.iframe_group] = i.iframe_duration
     

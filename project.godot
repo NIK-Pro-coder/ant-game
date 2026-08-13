@@ -27,8 +27,8 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://components/": "red",
-"res://globals/": "pink",
-"res://hitboxes/": "orange"
+"res://globals/": "orange",
+"res://hitboxes/": "yellow"
 }
 
 [layer_names]

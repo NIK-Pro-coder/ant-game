@@ -10,7 +10,6 @@ class_name HitBox extends NeutralBox
 @export var iframe_duration: float = .1
 
 signal on_expire
-@warning_ignore("unused_signal")
 signal on_hit(what: HurtBox)
 
 func _ready() -> void:
@@ -34,6 +33,8 @@ func _process(_delta: float) -> void:
   collision_layer = int(pow(2, 3 + team))
   collision_mask = int(pow(2, 2 - team))
 
+func hit(what: HurtBox) -> void:
+  on_hit.emit(what)
 
 func _exit_tree() -> void:
   on_expire.emit()
