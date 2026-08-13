@@ -3,7 +3,7 @@
 Ant Game is a fast-paced roguelike where you're an ant that has to go room after room defeating enemies, upgrading your wepoan, getting new mutations and finally defeating the final boss.
 
 ## TODOS (For MVP):
-  - [ ] Components
+  - [x] Components
     - [x] Health
       - [x] Store max hp & current hp
       - [x] Signals
@@ -12,13 +12,13 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
         - [x] On heal
         - [x] On fullheal
       - [x] Healthbars
-    - [ ] Stats
-      - [ ] Hold various player & enemy stats
-        - [ ] Speed
-        - [ ] Damage
-        - [ ] Defence
+    - [x] Stats
+      - [x] Hold various player & enemy stats
+        - [x] Speed
+        - [x] Damage
+        - [x] Defence
         - [ ] (Others...)
-      - [ ] Emit signals when stats change
+      - [x] Emit signals when stats change
   
   - [ ] Hitbox/Hurtbox system
     - [ ] Base hitboxes
@@ -52,6 +52,13 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
     - [ ] Enemy AI
       - [ ] Base pathfinding
       - [ ] Base auto-retarget
+  
+  - [ ] Weapons
+    - [ ] Weapons resource
+      - [ ] Primary (close range)
+      - [ ] Secondary (long range or something to close the distance)
+      - [ ] Ultimate (not sure abt this one)
+      - [ ] Rarity
   
   - [ ] Level generator
     - [ ] Graph generation
