@@ -1,18 +1,18 @@
 class_name HealthComp extends Node
 
-signal on_damage(amt: int)
+signal on_damage(amt: float)
 signal on_killed
-signal on_heal(amt: int)
+signal on_heal(amt: float)
 signal on_fullheal
 
-var health: int = 5:
+var health: float = 5:
   set(value):
     health = value
     update_healthbar()
-@export var max_hp: int = 5:
+@export var max_hp: float = 5:
   set(value):
-    var r: float = float(value) / float(max_hp)
-    health = int(round(health * r))
+    var r: float = value / max_hp
+    health *= r
     max_hp = value
     update_healthbar()
 
@@ -27,10 +27,10 @@ func update_healthbar() -> void:
 func kill() -> void: damage(max_hp)
 func fullheal() -> void: damage(-max_hp)
 
-func heal(amt: int) -> void:
+func heal(amt: float) -> void:
   damage(-amt)
 
-func damage(amt: int) -> void:
+func damage(amt: float) -> void:
   if amt == 0: return
   
   health = clamp(health - amt, 0, max_hp)

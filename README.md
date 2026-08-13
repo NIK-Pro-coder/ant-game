@@ -22,7 +22,8 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
   
   - [ ] Hitbox/Hurtbox system
     - [ ] Base hitboxes
-      - [ ] Shape
+      - [x] Teams
+      - [x] Shape
       - [ ] Damage values
       - [ ] Hitstun values
       - [ ] Lifetimes

@@ -3,11 +3,11 @@ class_name Healthbar extends ProgressBar
 
 const HEALTH_PIP_SIZE: float = 16.0
 
-@export var max_hp: int = 5:
+@export var max_hp: float = 5:
   set(value):
     max_hp = value
     lag_time = .5
-@export var health: int = 5:
+@export var health: float = 5:
   set(value):
     health = value
     lag_time = .5
