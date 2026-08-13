@@ -24,6 +24,10 @@ func _process(delta: float) -> void:
   
   if team == Globals.Teams.Enemy:
     collision_mask |= 8
+    if len(get_overlapping_areas()) > 0:
+      team = Globals.Teams.Player
+      direction = -direction
+      speed = speed * 1.2
 
   if !Engine.is_editor_hint():
     motor.velocity = direction * speed * delta * 60

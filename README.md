@@ -36,10 +36,10 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
       - [x] Iframes
       - [x] Signals
         - [x] On hit
-    - [ ] Projectiles
+    - [x] Projectiles
       - [x] Movement
       - [x] Piercing
-      - [ ] Parrying
+      - [x] Parrying
   
   - [ ] Player
     - [ ] Velocity-based horizontal movement
