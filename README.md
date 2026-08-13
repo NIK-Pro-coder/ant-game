@@ -59,6 +59,8 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
       - [ ] Secondary (long range or something to close the distance)
       - [ ] Ultimate (not sure abt this one)
       - [ ] Rarity
+    - [ ] Have player swing weapons
+    - [ ] Make weapons obtainable
   
   - [ ] Level generator
     - [ ] Graph generation
