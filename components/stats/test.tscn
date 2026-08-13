@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bs0xr8iw3h8pg"]
-
-[ext_resource type="Script" uid="uid://begvlot301ukq" path="res://components/stats/stat_comp.gd" id="1_4yiog"]
-
-[node name="StatComp" type="Node" unique_id=1810825692]
-script = ExtResource("1_4yiog")
-metadata/_custom_type_script = "uid://begvlot301ukq"

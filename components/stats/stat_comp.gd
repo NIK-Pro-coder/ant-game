@@ -57,6 +57,6 @@ var def: float = 0.0:
 signal stats_changed
 
 func _ready() -> void:
-  spd_holder.changed.connect(stats_changed.emit)
-  atk_holder.changed.connect(stats_changed.emit)
-  def_holder.changed.connect(stats_changed.emit)
+  spd_holder.stat_changed.connect(stats_changed.emit)
+  atk_holder.stat_changed.connect(stats_changed.emit)
+  def_holder.stat_changed.connect(stats_changed.emit)
