@@ -14,6 +14,10 @@ config/name="Ant Game"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*uid://d3uco4v1rubxp"
+
 [display]
 
 window/stretch/mode="canvas_items"
@@ -22,8 +26,18 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
-"res://components/": "red"
+"res://components/": "red",
+"res://globals/": "pink",
+"res://hitboxes/": "orange"
 }
+
+[layer_names]
+
+2d_physics/layer_1="environment"
+2d_physics/layer_2="player_hurt"
+2d_physics/layer_3="enemy_hurt"
+2d_physics/layer_4="player_hit"
+2d_physics/layer_5="enemy_hit"
 
 [physics]
 
