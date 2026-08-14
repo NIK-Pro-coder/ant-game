@@ -30,7 +30,8 @@ folder_colors={
 "res://components/": "red",
 "res://globals/": "orange",
 "res://hitboxes/": "yellow",
-"res://player/": "green"
+"res://player/": "green",
+"res://systems/": "teal"
 }
 
 [input]
