@@ -157,3 +157,21 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
   if Engine.is_editor_hint(): update_gizmos()
   elif target_node and target.distance_squared_to(target_node.global_position) > 32: target = target_node.global_position
+
+func get_next_direction(pos: Vector2) -> Vector2:
+  var min_dist: float = -1
+  var min_rot: float = 0
+  var min_pos: Vector2 = Vector2.ZERO
+  for i in get_children():
+    if i.name.begins_with("path"):
+      var d := (i as Sprite2D).global_position.distance_squared_to(pos)
+      
+      if d < min_dist or min_dist < 0:
+        min_dist = d
+        min_rot = (i as Sprite2D).rotation
+        min_pos = (i as Sprite2D).global_position
+  
+  return (
+    (min_pos - pos).normalized() * .5 + \
+    Vector2.from_angle(min_rot - PI / 2.0)
+  ).normalized()
