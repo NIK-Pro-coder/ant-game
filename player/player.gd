@@ -1,7 +1,6 @@
 class_name Player extends CharacterBody2D
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -600.0
+const JUMP_VELOCITY = -750.0
 
 @export var max_jumps: int = 2
 var jumps: int = 0
@@ -45,16 +44,23 @@ func handle_vertical(delta: float) -> void:
   if is_jumping and velocity.y > 0:
     gravity_mult += 1
 
+const TOP_SPEED: float = 750.0
+const GROUND_ACCEL: float = 100.0
+const AIR_FRICTION_MULT: float = .25
+
 func handle_movement(delta: float) -> void:
   handle_vertical(delta)
   
-  # Get the input direction and handle the movement/deceleration.
-  # As good practice, you should replace UI actions with custom gameplay actions.
   var direction := Input.get_axis("left", "right")
-  if direction:
-    velocity.x = direction * SPEED
-  else:
-    velocity.x = move_toward(velocity.x, 0, SPEED)
+  var diff: float = direction * GROUND_ACCEL * delta * 60
+  if direction and velocity.x * direction < TOP_SPEED:
+    velocity.x += diff
+    
+  velocity.x = move_toward(
+    velocity.x, 
+    0, 
+    GROUND_ACCEL * delta * 30 * (1.0 if is_on_floor() else AIR_FRICTION_MULT)
+  )
 
   if !is_on_floor():
     velocity += get_gravity() * delta * gravity_mult
