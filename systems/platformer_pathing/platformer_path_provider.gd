@@ -147,11 +147,6 @@ func update_path() -> void:
         frontier.append(pos + o)
         previous.append(pos)
 
-  for i in get_children():
-    if i.name.begins_with("path"):
-      if !visited.filter(func(v: Vector2i): return "path%s%s" % [v.x, v.y] == i.name):
-        i.queue_free()
-
 func _ready() -> void:
   if Engine.is_editor_hint(): create_gizmos()
   
