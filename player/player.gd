@@ -17,6 +17,8 @@ var is_jumping: bool = false
 
 var gravity_mult: float = 1.0
 
+var is_grounded: bool = false
+
 func handle_vertical(delta: float) -> void:
   jump_buf -= delta
   if Input.is_action_pressed("jump") and jump_released: jump_buf = max_jump_buffer
@@ -26,8 +28,12 @@ func handle_vertical(delta: float) -> void:
     coyote_time = max_coyote_time
     is_jumping = false
 
-  if coyote_time > 0: jumps = max_jumps
-  else: jumps = min(jumps, max_jumps - 1)
+  if coyote_time > 0:
+    jumps = max_jumps
+    is_grounded = true
+  else:
+    jumps = min(jumps, max_jumps - 1)
+    is_grounded = false
 
   if jump_buf > 0 and jumps > 0:
     jumps -= 1
@@ -66,12 +72,17 @@ var dash_timer: float = 0.0
 var dash_dir: float = 0.0
 var released: bool = false
 
+@export var max_air_dashes: int = 2
+var dashes: int = 2
+
 func handle_dash(delta: float) -> void:
+  if is_grounded: dashes = max_air_dashes
+  
   dash_timer += delta
   
   var direction := Input.get_axis("left", "right")
 
-  if direction and released:
+  if direction and released and dashes > 0:
     if direction != dash_dir :
       dash_dir = direction
       dash_timer = 0.0
@@ -79,6 +90,7 @@ func handle_dash(delta: float) -> void:
       velocity.x = dash_dir * TOP_SPEED * 2
       velocity.y = 0
       dash_dir = 0.0
+      dashes -= 1
   
   released = !direction
 
