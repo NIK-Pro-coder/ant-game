@@ -8,6 +8,7 @@ class_name PlatformerPathProvider extends Node
     target = value
     if target_gizmo: target_gizmo.global_position = value
     update_path()
+@export var target_node: Node2D
 
 @export var tilemap: TileMapLayer
 
@@ -56,7 +57,10 @@ func is_tile_solid(coords: Vector2i) -> bool:
   return self_data.get_collision_polygons_count(0) > 0
 
 func update_path() -> void:
-  if !tilemap: return
+  if !tilemap or !tilemap.tile_set: return
+  
+  @warning_ignore("narrowing_conversion")
+  var target_pos := Vector2i(target.x / tilemap.tile_set.tile_size.x, target.y / tilemap.tile_set.tile_size.y + 1)
   
   var used_rect: Rect2i = tilemap.get_used_rect()
   
@@ -64,9 +68,7 @@ func update_path() -> void:
     if is_instance_valid(i): i.queue_free()
   pathing_gizmos.clear()
   for i in get_children():
-    if i.name.begins_with("path"): i.queue_free()
-  
-  await get_tree().process_frame
+    if i.name.begins_with("path"): i.free()
   
   for x in range(used_rect.size.x):
     for y in range(used_rect.size.y):
@@ -75,8 +77,7 @@ func update_path() -> void:
         y + used_rect.position.y,
       )
       
-      @warning_ignore("narrowing_conversion")
-      if (is_tile_solid(tpos) and !is_tile_solid(tpos + Vector2i(0, -1))) or Vector2i(target.x / tilemap.tile_set.tile_size.x, target.y / tilemap.tile_set.tile_size.y) == tpos:
+      if (is_tile_solid(tpos) and !is_tile_solid(tpos + Vector2i(0, -1))) or target_pos == tpos:
         if !has_node("path%s%s" % [tpos.x, tpos.y]):
           var gizmo := create_gizmo("path%s%s" % [tpos.x, tpos.y], Vector2(.1, .1), Color.GREEN)
           gizmo.global_position = Vector2(
@@ -89,14 +90,15 @@ func update_path() -> void:
         
         for ox in [-1, 1]:
           if !is_tile_solid(tpos + Vector2i(ox, 0)):
-            var gizmo_side := create_gizmo("path%s%s" % [tpos.x + ox, tpos.y], Vector2(.1, .1), Color.ORANGE)
-            gizmo_side.global_position = Vector2(
-              (tpos.x + .5 + ox) * tilemap.tile_set.tile_size.x,
-              (tpos.y - .5) * tilemap.tile_set.tile_size.y,
-            )
-            
-            add_child(gizmo_side)
-            pathing_gizmos.append(gizmo_side)
+            if !has_node("path%s%s" % [tpos.x + ox, tpos.y]):
+              var gizmo_side := create_gizmo("path%s%s" % [tpos.x + ox, tpos.y], Vector2(.1, .1), Color.ORANGE)
+              gizmo_side.global_position = Vector2(
+                (tpos.x + .5 + ox) * tilemap.tile_set.tile_size.x,
+                (tpos.y - .5) * tilemap.tile_set.tile_size.y,
+              )
+              
+              add_child(gizmo_side)
+              pathing_gizmos.append(gizmo_side)
             
             for i in range(1, 100):
               if !is_tile_solid(tpos + Vector2i(ox, i-1)):
@@ -110,6 +112,46 @@ func update_path() -> void:
                 pathing_gizmos.append(gizmo_down)
               else: break
 
+  var visited: Array[Vector2i] = []
+  var previous: Array[Vector2i] = [target_pos]
+  var frontier: Array[Vector2i] = [target_pos]
+  
+  while len(frontier) > 0:
+    var prev := previous[0]
+    var pos := frontier[0]
+    frontier.pop_front()
+    previous.pop_front()
+    
+    visited.append(pos)
+    
+    var dir: float = 0.0
+    
+    if prev.x < pos.x: dir = PI * 1.5
+    if prev.x > pos.x: dir = PI * 0.5
+    if prev.y < pos.y: dir = PI * 0.0
+    if prev.y > pos.y: dir = PI * 1.0
+    
+    var g: Sprite2D = get_node("path%s%s" % [pos.x, pos.y])
+
+    g.rotation = dir
+    
+    for o in [
+      Vector2i(-1, 0),
+      Vector2i(1, 0),
+      Vector2i(0, -1),
+      Vector2i(0, 1),
+    ] :
+      var n := "path%s%s" % [pos.x + o.x, pos.y + o.y]
+      
+      if has_node(n) and !(pos + o) in visited:
+        frontier.append(pos + o)
+        previous.append(pos)
+
+  for i in get_children():
+    if i.name.begins_with("path"):
+      if !visited.filter(func(v: Vector2i): return "path%s%s" % [v.x, v.y] == i.name):
+        i.queue_free()
+
 func _ready() -> void:
   if Engine.is_editor_hint(): create_gizmos()
   
@@ -119,3 +161,4 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
   if Engine.is_editor_hint(): update_gizmos()
+  elif target_node and target.distance_squared_to(target_node.global_position) > 32: target = target_node.global_position
