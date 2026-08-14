@@ -46,9 +46,10 @@ Ant Game is a fast-paced roguelike where you're an ant that has to go room after
       - [ ] Acceleration
       - [ ] Air & ground friction
     - [ ] Jumping
-      - [ ] Coyote time
-      - [ ] Jump buffering
-      - [ ] Multiple jumps
+      - [x] Coyote time
+      - [x] Jump buffering
+      - [x] Multiple jumps
+      - [ ] Variable height jumps
     - [ ] Dash
       - [ ] Dash buffering
       - [ ] Multiple dashes

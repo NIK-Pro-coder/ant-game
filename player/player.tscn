@@ -4,12 +4,13 @@
 [ext_resource type="Script" uid="uid://cbwreoid7atua" path="res://player/player.gd" id="1_rkbax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wbm84"]
-size = Vector2(128, 128)
+size = Vector2(64, 64)
 
 [node name="Player" type="CharacterBody2D" unique_id=1237072704]
 script = ExtResource("1_rkbax")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=695321076]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_oul6g")
 
 [node name="Collider" type="CollisionShape2D" parent="." unique_id=2126034365]

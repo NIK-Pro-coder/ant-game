@@ -4,6 +4,9 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wbm84"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbm84"]
+size = Vector2(368, 432)
+
 [node name="Main" type="Node" unique_id=835543950]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=740941907]
@@ -11,6 +14,9 @@ position = Vector2(488, 632)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1044876920]
 shape = SubResource("WorldBoundaryShape2D_wbm84")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1557065870]
+shape = SubResource("RectangleShape2D_wbm84")
 
 [node name="Player" parent="." unique_id=1237072704 instance=ExtResource("1_ig7tw")]
 position = Vector2(472, 256)
