@@ -1,6 +1,6 @@
 class_name Player extends CharacterBody2D
 
-const JUMP_VELOCITY = -1250.0
+const JUMP_VELOCITY = -1000.0
 
 @export var max_jumps: int = 2
 var jumps: int = 0
@@ -50,7 +50,7 @@ func handle_vertical(delta: float) -> void:
   if is_jumping and velocity.y > 0:
     gravity_mult += .5
 
-const TOP_SPEED: float = 750.0
+const TOP_SPEED: float = 500.0
 const GROUND_ACCEL: float = 100.0
 const AIR_FRICTION_MULT: float = .25
 
@@ -66,7 +66,7 @@ func handle_horizontal(delta: float) -> void:
     GROUND_ACCEL * delta * 30 * (1.0 if is_on_floor() else AIR_FRICTION_MULT)
   )
 
-const MAX_DOUBLE_TAP_TIME: float = 0.2
+const MAX_DOUBLE_TAP_TIME: float = 0.3
 
 var dash_timer: float = 0.0
 var dash_dir: float = 0.0
@@ -83,14 +83,14 @@ func handle_dash(delta: float) -> void:
   var direction := Input.get_axis("left", "right")
 
   if direction and released and dashes > 0:
-    if direction != dash_dir :
-      dash_dir = direction
-      dash_timer = 0.0
-    elif dash_timer < MAX_DOUBLE_TAP_TIME:
+    if direction == dash_dir and dash_timer < MAX_DOUBLE_TAP_TIME:
       velocity.x = dash_dir * TOP_SPEED * 2
       velocity.y = 0
       dash_dir = 0.0
       dashes -= 1
+    else:
+      dash_dir = direction
+      dash_timer = 0.0
   
   released = !direction
 
